@@ -57,9 +57,34 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                
-                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-                    <p>&copy; 2024 Law Firm. All rights reserved.</p>
+
+                <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
+                    <p>&copy; {new Date().getFullYear()} Law Firm. All rights reserved.</p>
+
+                    {/* Watermark Developer Credit */}
+                    <div className="flex items-center gap-1 text-xs text-gray-500 font-sans select-none">
+                        <span className="opacity-70">Developed by</span>
+                        <abbr
+                            title="Abdul Jabbar"
+                            className="group relative no-underline cursor-pointer inline-flex items-center text-[#A07D5A] font-bold hover:text-amber-400 transition-colors duration-500 font-sans tracking-wide overflow-hidden"
+                        >
+                            <span className="inline-flex items-center">
+                                <span className="text-[#A07D5A] group-hover:text-amber-400 transition-colors font-extrabold text-xs">A</span>
+                                <span className="max-w-0 w-0 opacity-0 group-hover:max-w-20 group-hover:w-auto group-hover:opacity-100 transition-all duration-500 ease-out overflow-hidden whitespace-nowrap text-xs font-semibold text-[#A07D5A]">
+                                    bdul
+                                </span>
+                            </span>
+
+                            <span className="w-0 group-hover:w-1 transition-all duration-500"></span>
+
+                            <span className="inline-flex items-center">
+                                <span className="text-[#A07D5A] group-hover:text-amber-400 transition-colors font-extrabold text-xs">J</span>
+                                <span className="max-w-0 w-0 opacity-0 group-hover:max-w-20 group-hover:w-auto group-hover:opacity-100 transition-all duration-500 ease-out overflow-hidden whitespace-nowrap text-xs font-semibold text-[#A07D5A]">
+                                    abbar
+                                </span>
+                            </span>
+                        </abbr>
+                    </div>
                 </div>
             </div>
         </footer>

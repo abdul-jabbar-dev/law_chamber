@@ -1,6 +1,11 @@
+"use client";
+
 import Link from 'next/link';
+import { useAppointmentModal } from "@/src/context/AppointmentContext";
 
 const CTA = () => {
+    const { openAppointmentModal } = useAppointmentModal();
+
     return (
         <section className="py-20 bg-[#A07D5A] text-white text-center">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,9 +17,12 @@ const CTA = () => {
                     <Link href="/contact" className="bg-white text-[#A07D5A] hover:bg-gray-100 px-8 py-3 rounded font-medium transition-colors">
                         Call Us
                     </Link>
-                    <Link href="/appointment" className="bg-transparent border border-white text-white hover:bg-white/10 px-8 py-3 rounded font-medium transition-colors">
+                    <button
+                        onClick={openAppointmentModal}
+                        className="bg-transparent border border-white text-white hover:bg-white/10 px-8 py-3 rounded font-medium transition-colors cursor-pointer"
+                    >
                         Book Appointment
-                    </Link>
+                    </button>
                 </div>
             </div>
         </section>
