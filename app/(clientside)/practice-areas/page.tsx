@@ -1,7 +1,11 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
-import { Scale, Handshake, Landmark, Gavel } from "lucide-react";
+import { Scale, Gavel, Home, Users, Banknote, FileText, Scroll, Globe, FileSignature, Receipt } from "lucide-react";
 
 export default function PracticeAreasPage() {
+    const [showAll, setShowAll] = useState(false);
+
     return (
         <div className="w-full min-h-screen bg-[#FAFAFA] flex flex-col text-gray-900">
             {/* SECTION 1: Main Practice Areas Content */}
@@ -24,7 +28,8 @@ export default function PracticeAreasPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* CIVIL MATTERS CARD */}
+
+                        {/* CIVIL MATTERS */}
                         <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
                             <div>
                                 <div className="flex items-center gap-4 mb-6">
@@ -34,66 +39,17 @@ export default function PracticeAreasPage() {
                                 <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
                                     <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Contract Disputes</li>
                                     <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Property & Land Matters</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Family Law & Divorce</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Wills & Estates</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Personal Injury</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Injunctions & Stay Orders</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Defamation Claims</li>
                                 </ul>
                                 <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
-                                    Strategic approach to resolving disputes and protecting assets. Client-focused counsel for sensitive matters.
+                                    Strategic approach to resolving civil disputes and protecting assets. Client-focused counsel for sensitive matters.
                                 </p>
                             </div>
-                            <button className="w-full bg-[#A07D5A] hover:bg-[#866645] text-white font-medium py-3 px-4 rounded text-xs uppercase tracking-widest transition-colors">
-                                Explore Civil Litigation Process
-                            </button>
+
                         </div>
 
-                        {/* CORPORATE AFFAIRS CARD */}
-                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
-                            <div>
-                                <div className="flex items-center gap-4 mb-6">
-                                    <Handshake className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
-                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Corporate Affairs</h2>
-                                </div>
-                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Business Formation & Structuring</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Mergers & Acquisitions</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Corporate Governance</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> IP & Licensing</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Regulatory Compliance</li>
-                                </ul>
-                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
-                                    Global business counsel from local perspective. Experience with local market dynamics and global standards.
-                                </p>
-                            </div>
-                            <button className="w-full bg-[#A07D5A] hover:bg-[#866645] text-white font-medium py-3 px-4 rounded text-xs uppercase tracking-widest transition-colors">
-                                View Corporate Case Studies
-                            </button>
-                        </div>
-
-                        {/* ADMINISTRATIVE & REGULATORY CARD */}
-                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
-                            <div>
-                                <div className="flex items-center gap-4 mb-6">
-                                    <Landmark className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
-                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Administrative & Regulatory</h2>
-                                </div>
-                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Government Relations</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Licensing & Permits</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Public Procurement</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Regulatory Audits</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Administrative Appeals</li>
-                                </ul>
-                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
-                                    Navigate complex bureaucratic systems with expert guidance. Represent your interests before government agencies.
-                                </p>
-                            </div>
-                            <button className="w-full bg-[#A07D5A] hover:bg-[#866645] text-white font-medium py-3 px-4 rounded text-xs uppercase tracking-widest transition-colors">
-                                Meet Our Administrative Lawyers
-                            </button>
-                        </div>
-
-                        {/* CRIMINAL DEFENSE CARD */}
+                        {/* CRIMINAL DEFENSE */}
                         <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
                             <div>
                                 <div className="flex items-center gap-4 mb-6">
@@ -103,16 +59,186 @@ export default function PracticeAreasPage() {
                                 <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
                                     <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> White-Collar Crime</li>
                                     <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Serious Felony Charges</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Strategic Defense Planning</li>
-                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Investigation Support</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Fraud & Embezzlement</li>
                                     <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Post-Conviction Relief</li>
                                 </ul>
                                 <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
                                     Robust defense against serious criminal charges. Protect your rights and future with strategic representation.
                                 </p>
                             </div>
-                            <button className="w-full bg-[#A07D5A] hover:bg-[#866645] text-white font-medium py-3 px-4 rounded text-xs uppercase tracking-widest transition-colors">
-                                Explore Our Defense Strategies
+
+                        </div>
+
+                        {/* LANDLORD & TENANT */}
+                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                            <div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <Home className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Landlord & Tenant</h2>
+                                </div>
+                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Eviction Proceedings</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Lease Agreements</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Rent Arrears Recovery</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Property Damage Claims</li>
+                                </ul>
+                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                    Legal support for property leasing and resolving tenant disputes effectively and efficiently.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {/* FAMILY LAWS & DIVORCE */}
+                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                            <div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <Users className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Family Laws & Divorce</h2>
+                                </div>
+                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Mutual & Contested Divorce</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Child Custody & Support</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Alimony & Maintenance</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Domestic Violence Defense</li>
+                                </ul>
+                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                    Compassionate counsel for family legal matters. Navigating sensitive issues with care and expertise.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {/* CHEQUE & MONEY CLAIMS */}
+                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                            <div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <Banknote className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Cheque & Money Claims</h2>
+                                </div>
+                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Cheque Dishonour Cases</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Money Recovery Suits</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Promissory Notes</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Financial Fraud Recovery</li>
+                                </ul>
+                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                    Efficient recovery and resolution of financial disputes. Swift legal action for bounced cheques and debts.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {/* SUCCESSION */}
+                        <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                            <div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <FileText className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                    <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Succession</h2>
+                                </div>
+                                <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Succession Certificates</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Heirship Declarations</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Property Partition</li>
+                                    <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Estate Planning</li>
+                                </ul>
+                                <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                    Guidance on property inheritance and succession planning ensuring smooth transition of assets.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {showAll && (
+                            <>
+                                {/* WILL & PROBATE */}
+                                <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                                    <div>
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <Scroll className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                            <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Will & Probate</h2>
+                                        </div>
+                                        <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Will Drafting & Registration</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Probate Proceedings</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Letters of Administration</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Will Contests & Disputes</li>
+                                        </ul>
+                                        <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                            Expertise in drafting airtight wills and navigating the probate process seamlessly through the courts.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                {/* HUMAN RIGHTS */}
+                                <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                                    <div>
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <Globe className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                            <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Human Rights</h2>
+                                        </div>
+                                        <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Constitutional Rights</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Protection from Abuse</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Freedom of Expression</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Public Interest Litigation (PIL)</li>
+                                        </ul>
+                                        <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                            Fierce advocacy and protection of fundamental human rights against any form of violation.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                {/* WRIT */}
+                                <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                                    <div>
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <FileSignature className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                            <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Writ</h2>
+                                        </div>
+                                        <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Habeas Corpus</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Mandamus & Certiorari</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Quo Warranto & Prohibition</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Challenging Gov. Actions</li>
+                                        </ul>
+                                        <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                            Filing and arguing complex writ petitions in higher courts to enforce constitutional remedies.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                {/* INCOME TAX ON SERVICE */}
+                                <div className="bg-white p-8 md:p-10 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                                    <div>
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <Receipt className="w-9 h-9 text-[#A07D5A]" strokeWidth={1.5} />
+                                            <h2 className="text-xl font-semibold text-[#1A1A1A] uppercase tracking-wide">Income Tax on service</h2>
+                                        </div>
+                                        <ul className="space-y-2.5 mb-6 text-sm text-gray-800">
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Tax Assessment & Returns</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Tax Planning & Advisory</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Audit Representation</li>
+                                            <li className="flex items-start"><span className="text-[#A07D5A] mr-2 font-bold">•</span> Appeals & Tribunals</li>
+                                        </ul>
+                                        <p className="text-xs md:text-sm text-gray-600 mb-8 leading-relaxed">
+                                            Expert advice on income tax compliance, planning, and representation before tax authorities.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </>
+                        )}
+                        <div className="col-span-1 md:col-span-2 mt-8 text-center flex justify-center">
+                            <button
+                                onClick={() => setShowAll(!showAll)}
+                                className="bg-[#A07D5A] hover:bg-[#866645] text-white font-medium py-3 px-8 rounded text-sm uppercase tracking-widest transition-colors"
+                            >
+                                {showAll ? "Show Less" : "Show More"}
                             </button>
                         </div>
                     </div>

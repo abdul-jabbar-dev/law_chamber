@@ -24,12 +24,16 @@ export const CHAMBER_CONTACT_INFO = {
 };
 
 export const PRACTICE_AREA_OPTIONS = [
-    { value: "Corporate Law", label: "Corporate Law & Litigation" },
-    { value: "Real Estate", label: "Real Estate & Property Acquisition" },
-    { value: "Criminal Defense", label: "Criminal Defense & Audit Investigation" },
-    { value: "Regulatory Appeals", label: "Administrative & Regulatory Appeals" },
-    { value: "Family & Estate", label: "Family Law & Estate Planning" },
-    { value: "General Consultation", label: "General Legal Advisory" },
+    { value: "Civil Matters", label: "Civil Matters" },
+    { value: "Criminal Defense", label: "Criminal Defense" },
+    { value: "Landlord & Tenant", label: "Landlord & Tenant" },
+    { value: "Family Laws & Divorce", label: "Family Laws & Divorce" },
+    { value: "Cheque & Money Claims", label: "Cheque & Money Claims" },
+    { value: "Succession", label: "Succession" },
+    { value: "Will & Probate", label: "Will & Probate" },
+    { value: "Human Rights", label: "Human Rights" },
+    { value: "Writ", label: "Writ" },
+    { value: "Income Tax on service", label: "Income Tax on service" },
 ];
 
 export const TIME_SLOT_OPTIONS = [

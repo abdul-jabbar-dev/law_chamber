@@ -13,10 +13,10 @@ const Page = () => {
             <Hero />
             <About />
             <Services />
-            <Stats />
-            <Testimonials />
+            {/* <Stats /> */}
             <LatestPosts />
             <ChamberInfo />
+            <Testimonials />
             <CTA />
         </main>
     );
