@@ -14,7 +14,7 @@ const Hero = () => {
                     src="/img/image.png"
                     alt="Hero Background"
                     fill
-                    quality={100}
+                    sizes="100vw"
                     priority
                     className="object-cover z-0"
                     style={{ objectPosition: 'center 60%' }}

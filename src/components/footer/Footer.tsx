@@ -7,12 +7,14 @@ const Footer = () => {
         <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                    {/* Map Area */}
-                    <div className="rounded-lg overflow-hidden h-48 bg-gray-800 relative">
-                        <Image src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=600&auto=format&fit=crop" alt="Map Location" fill className="object-cover opacity-70" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <MapPin className="text-white w-8 h-8 drop-shadow-md" />
-                        </div>
+                    {/* Logo & Description */}
+                    <div className="flex flex-col gap-4">
+                        <Link  href="/" className="flex w-32 items-center gap-3">
+                            <Image src={'/svg/logoSvg.svg'} alt="Logo" width={80} height={80} style={{ width: 'auto', height: 'auto' }} />
+                         </Link>
+                        <p className="text-sm text-gray-400 leading-relaxed">
+                            Providing expert legal solutions with integrity, dedication, and a commitment to justice.
+                        </p>
                     </div>
 
                     {/* Quick Links */}

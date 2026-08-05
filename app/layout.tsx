@@ -15,12 +15,35 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Law Chamber | Services & Legal Practice",
+  title: "Law Chamber | Expert Legal Services & Practice",
   description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
+  openGraph: {
+    title: "Law Chamber | Expert Legal Services",
+    description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
+    url: "https://yourlawfirm.com",
+    siteName: "Law Chamber",
+    images: [
+      {
+        url: "https://yourlawfirm.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Law Chamber Premium Services",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Law Chamber | Expert Legal Services",
+    description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
+    images: ["https://yourlawfirm.com/og-image.jpg"],
+  },
 };
 
 import FloatingWhatsApp from "@/src/components/common/FloatingWhatsApp";
 import { AppointmentProvider } from "@/src/context/AppointmentContext";
+import { Toaster } from "sonner";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -32,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AppointmentProvider>
           {children}
           <FloatingWhatsApp />
+          <Toaster position="bottom-right" richColors />
         </AppointmentProvider>
       </body>
     </html>

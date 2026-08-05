@@ -5,6 +5,7 @@ import Image from "next/image";
 import { User, Mail, Phone, Scale, Pencil, MapPin, MessageSquare, ChevronDown, Clock, ShieldCheck } from "lucide-react";
 import { useAppointmentModal } from "@/src/context/AppointmentContext";
 import { CHAMBER_CONTACT_INFO, getWhatsAppMessageLink } from "@/src/constants/contactInfo";
+import ChamberInfo from "@/src/components/home/ChamberInfo";
 
 export default function ContactPage() {
     const { openAppointmentModal } = useAppointmentModal();
@@ -237,6 +238,9 @@ export default function ContactPage() {
                     className="object-cover"
                 />
             </section>
+
+            {/* Chamber Information Section */}
+            <ChamberInfo />
 
             {/* Google Map Section with Center-Left Detailed Location Overlay */}
             <section className="w-full relative h-[450px] md:h-[520px] overflow-hidden border-b border-gray-200">

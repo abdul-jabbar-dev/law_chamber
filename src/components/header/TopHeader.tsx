@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppointmentModal } from "@/src/context/AppointmentContext";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -19,6 +21,15 @@ const navLinks = [
 const TopHeader = () => {
     const pathname = usePathname();
     const { openAppointmentModal } = useAppointmentModal();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
 
     return (
         <header className="bg-white/60 backdrop-blur-md sticky top-0 z-50 w-full border-b border-gray-100">
@@ -26,7 +37,9 @@ const TopHeader = () => {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo Section */}
                     <Link href="/" className="flex items-center gap-2">
-                        <Image src={'/svg/logoSvg.svg'} alt="Logo" width={50} height={50} />
+                        <div className=" w-14 h-14">
+                            <Image src={'/svg/logoSvg.svg'} alt="Logo" width={50} height={50} style={{ width: 'auto', height: 'auto' }} />
+                        </div>
                         <span className="text-2xl font-bold text-[#A07D5A] tracking-wide font-serif">Law Firm</span>
                     </Link>
 
@@ -62,8 +75,58 @@ const TopHeader = () => {
                             Book Appointment
                         </button>
                     </div>
+
+                    {/* Mobile Menu Toggle Button */}
+                    <div className="lg:hidden flex items-center">
+                        <button 
+                            onClick={toggleMobileMenu}
+                            className="text-gray-800 hover:text-[#A07D5A] transition-colors p-2 focus:outline-none"
+                            aria-label="Toggle mobile menu"
+                        >
+                            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            {/* Mobile Navigation Menu */}
+            {isMobileMenuOpen && (
+                <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-lg animate-in slide-in-from-top-2">
+                    <nav className="flex flex-col px-4 pt-2 pb-6 space-y-2">
+                        {navLinks.map((link) => {
+                            const isActive = link.href === "/" 
+                                ? pathname === "/" 
+                                : pathname.startsWith(link.href);
+
+                            return (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={closeMobileMenu}
+                                    className={
+                                        isActive
+                                            ? "text-[#A07D5A] font-semibold border-l-4 border-[#A07D5A] pl-3 py-2 bg-gray-50 transition-all rounded-r"
+                                            : "text-gray-700 hover:text-[#A07D5A] hover:bg-gray-50 font-semibold pl-4 py-2 transition-colors rounded"
+                                    }
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
+                        <div className="pt-4 px-2 md:hidden">
+                            <button 
+                                onClick={() => {
+                                    closeMobileMenu();
+                                    openAppointmentModal();
+                                }}
+                                className="w-full border border-[#A07D5A] text-[#A07D5A] hover:bg-[#A07D5A] hover:text-white transition-colors px-6 py-3 rounded font-medium text-center"
+                            >
+                                Book Appointment
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            )}
         </header>
     );
 };

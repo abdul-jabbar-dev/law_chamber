@@ -4,6 +4,7 @@ import Services from "@/src/components/home/Services";
 import Stats from "@/src/components/home/Stats";
 import Testimonials from "@/src/components/home/Testimonials";
 import LatestPosts from "@/src/components/home/LatestPosts";
+import ChamberInfo from "@/src/components/home/ChamberInfo";
 import CTA from "@/src/components/home/CTA";
 
 const Page = () => {
@@ -15,6 +16,7 @@ const Page = () => {
             <Stats />
             <Testimonials />
             <LatestPosts />
+            <ChamberInfo />
             <CTA />
         </main>
     );

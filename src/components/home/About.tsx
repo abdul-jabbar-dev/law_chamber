@@ -16,11 +16,12 @@ const About = () => {
                     <div className="w-full md:w-2/5">
                         <div className="relative h-75 w-full rounded-lg overflow-hidden shadow-xl">
                             {/* Placeholder for lawyer image */}
-                            <div className="w-full h-full bg-gray-300">
+                            <div className="relative w-full h-full bg-gray-300">
                                 <Image
                                     src="/img/profile.png"
                                     alt="Lawyer"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 40vw"
                                     className="object-cover scale-[1.25] "
                                 />
                             </div>

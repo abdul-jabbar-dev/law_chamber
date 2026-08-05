@@ -1,14 +1,13 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, CheckCircle2, ShieldCheck } from "lucide-react";
 import { blogPosts } from "@/src/data/blogPosts";
+import ConsultCalloutClient from "@/src/components/blog/ConsultCalloutClient";
+import ShareButtonsClient from "@/src/components/blog/ShareButtonsClient";
 
-export async function generateStaticParams() {
-    return blogPosts.map((post) => ({
-        slug: post.slug,
-    }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function BlogDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -70,13 +69,14 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
                             <span>{post.readTime}</span>
                         </div>
                     </div>
+                    <ShareButtonsClient title={post.title} />
                 </div>
             </section>
 
             {/* Main Content Area */}
             <section className="w-full py-16 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                    
+
                     {/* LEFT COLUMN: Article Dynamic Content (8 cols) */}
                     <div className="lg:col-span-8 bg-white p-8 md:p-12 rounded-xl border border-gray-100 shadow-sm space-y-8">
                         {/* Hero Image */}
@@ -135,13 +135,6 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
                                     {post.category}
                                 </span>
                             </div>
-
-                            <Link
-                                href="/contact"
-                                className="bg-[#A07D5A] hover:bg-[#866645] text-white px-5 py-2.5 rounded font-semibold transition-colors"
-                            >
-                                Consult Author on This Topic
-                            </Link>
                         </div>
                     </div>
 
@@ -190,18 +183,7 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
                         </div>
 
                         {/* Consult Callout */}
-                        <div className="bg-[#1E1B18] text-white p-6 rounded-xl border border-gray-800 text-center space-y-4">
-                            <h4 className="text-lg font-bold text-white">Need Legal Guidance?</h4>
-                            <p className="text-xs text-gray-300 font-sans leading-relaxed">
-                                Schedule a direct confidential consultation with our attorneys to discuss your case details.
-                            </p>
-                            <Link
-                                href="/contact"
-                                className="block w-full bg-[#A07D5A] hover:bg-[#866645] text-white text-xs font-semibold py-3 rounded transition-colors uppercase tracking-wider font-sans"
-                            >
-                                Book Appointment
-                            </Link>
-                        </div>
+                        <ConsultCalloutClient />
                     </div>
 
                 </div>
