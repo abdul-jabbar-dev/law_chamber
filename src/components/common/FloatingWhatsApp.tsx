@@ -1,12 +1,28 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { MessageSquare } from "lucide-react";
 import { getWhatsAppMessageLink } from "@/src/constants/contactInfo";
 
 export default function FloatingWhatsApp() {
+    const [waLink, setWaLink] = useState(getWhatsAppMessageLink());
+
+    useEffect(() => {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    const waNumber = data.data.officeInfo?.whatsappNumber?.replace(/\D/g, '');
+                    const lawyerName = data.data.chamberInfo?.lawyerName;
+                    setWaLink(getWhatsAppMessageLink(undefined, waNumber, lawyerName));
+                }
+            })
+            .catch(err => console.error("Error fetching settings for WhatsApp widget:", err));
+    }, []);
+
     return (
         <a
-            href={getWhatsAppMessageLink()}
+            href={waLink}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Contact on WhatsApp"

@@ -37,12 +37,7 @@ const Hero = () => {
                         >
                             Book Free Appointment
                         </button>
-                        <button
-                            onClick={openAppointmentModal}
-                            className="bg-transparent border border-white text-white hover:bg-white/10 px-8 py-3 rounded font-medium transition-colors cursor-pointer"
-                        >
-                            Book Appointment
-                        </button>
+                        
                     </div>
                 </div>
             </div>

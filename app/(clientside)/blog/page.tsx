@@ -1,23 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, Tag, ChevronLeft, ChevronRight } from "lucide-react";
-
-import { blogPosts } from "@/src/data/blogPosts";
+import { ArrowRight, Clock, Tag, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import BookAppointmentBtn from "@/src/components/common/BookAppointmentBtn";
 
 export default function BlogListPage() {
+    const [blogs, setBlogs] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 3;
 
-    const featuredPost = blogPosts.find((post) => post.featured) || blogPosts[0];
-    const regularPosts = blogPosts.filter((post) => post.slug !== featuredPost.slug);
-
-    const totalPages = Math.ceil(regularPosts.length / postsPerPage);
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = regularPosts.slice(indexOfFirstPost, indexOfLastPost);
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`);
+                const data = await res.json();
+                if (data.success) {
+                    // Sort blogs by newest first
+                    const sortedBlogs = data.data.sort((a: any, b: any) => new Date(b.date || b.createdAt).getTime() - new Date(a.date || a.createdAt).getTime());
+                    setBlogs(sortedBlogs);
+                }
+            } catch (err) {
+                console.error("Error fetching blogs:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBlogs();
+    }, []);
 
     const handlePageChange = (pageNum: number) => {
         setCurrentPage(pageNum);
@@ -26,6 +38,37 @@ export default function BlogListPage() {
             section.scrollIntoView({ behavior: "smooth" });
         }
     };
+
+    if (loading) {
+        return (
+            <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center justify-center font-serif">
+                <Loader2 className="w-10 h-10 animate-spin text-[#A07D5A] mb-4" />
+                <p className="text-gray-500 font-sans">Loading legal insights...</p>
+            </div>
+        );
+    }
+
+    if (blogs.length === 0) {
+        return (
+            <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center justify-center font-serif">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">No Publications Yet</h2>
+                <p className="text-gray-500 font-sans mb-6">Check back later for new legal insights and articles.</p>
+                <Link href="/" className="px-6 py-2 bg-[#A07D5A] text-white rounded-lg hover:bg-[#866645] transition-colors font-sans font-medium">
+                    Return to Homepage
+                </Link>
+            </div>
+        );
+    }
+
+    const featuredPost = blogs.find((post: any) => post.featured);
+    const regularPosts = featuredPost
+        ? blogs.filter((post: any) => post._id !== featuredPost._id)
+        : blogs;
+
+    const totalPages = Math.ceil(regularPosts.length / postsPerPage) || 1;
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = regularPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     return (
         <div className="w-full min-h-screen bg-gray-50 flex flex-col font-serif">
@@ -49,61 +92,63 @@ export default function BlogListPage() {
                     </div>
 
                     {/* FEATURED POST BANNER */}
-                    <div className="bg-white rounded-xl border border-gray-100 shadow-md overflow-hidden mb-16 grid grid-cols-1 lg:grid-cols-12 gap-0">
-                        {/* Featured Image */}
-                        <div className="lg:col-span-7 relative h-72 lg:h-auto min-h-[350px]">
-                            <Image
-                                src={featuredPost.image}
-                                alt={featuredPost.title}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
+                    {featuredPost && (
+                        <div className="bg-white rounded-xl border border-gray-100 shadow-md overflow-hidden mb-16 grid grid-cols-1 lg:grid-cols-12 gap-0">
+                            {/* Featured Image */}
+                            <div className="lg:col-span-7 relative h-72 lg:h-auto min-h-[350px]">
+                                <Image
+                                    src={featuredPost.image}
+                                    alt={featuredPost.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
 
-                        {/* Featured Content */}
-                        <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between">
-                            <div>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <span className="text-xs font-bold text-[#A07D5A] uppercase tracking-widest font-sans bg-[#A07D5A]/10 px-3 py-1 rounded">
-                                        Featured Insight
-                                    </span>
-                                    <span className="text-xs text-gray-500 font-sans flex items-center gap-1">
-                                        <Clock className="w-3.5 h-3.5" />
-                                        {featuredPost.readTime}
-                                    </span>
+                            {/* Featured Content */}
+                            <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between">
+                                <div>
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <span className="text-xs font-bold text-[#A07D5A] uppercase tracking-widest font-sans bg-[#A07D5A]/10 px-3 py-1 rounded">
+                                            Featured Insight
+                                        </span>
+                                        <span className="text-xs text-gray-500 font-sans flex items-center gap-1">
+                                            <Clock className="w-3.5 h-3.5" />
+                                            {featuredPost.readTime}
+                                        </span>
+                                    </div>
+
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-snug hover:text-[#A07D5A] transition-colors">
+                                        <Link href={`/blog/${featuredPost.slug}`}>
+                                            {featuredPost.title}
+                                        </Link>
+                                    </h2>
+
+                                    <p className="text-sm text-gray-600 font-sans leading-relaxed mb-6">
+                                        {featuredPost.excerpt}
+                                    </p>
                                 </div>
 
-                                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-snug hover:text-[#A07D5A] transition-colors">
-                                    <Link href={`/blog/${featuredPost.slug}`}>
-                                        {featuredPost.title}
+                                <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-full bg-[#A07D5A]/10 border border-[#A07D5A]/30 flex items-center justify-center font-bold text-[#A07D5A] text-xs">
+                                            {featuredPost.author?.slice(0, 2).toUpperCase() || 'AA'}
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold text-gray-900 font-sans">{featuredPost.author}</h4>
+                                            <p className="text-[10px] text-gray-500 font-sans">{new Date(featuredPost.date || featuredPost.createdAt).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
+
+                                    <Link
+                                        href={`/blog/${featuredPost.slug}`}
+                                        className="bg-[#A07D5A] hover:bg-[#866645] text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center gap-1.5 font-sans"
+                                    >
+                                        Read Article <ArrowRight className="w-3.5 h-3.5" />
                                     </Link>
-                                </h2>
-
-                                <p className="text-sm text-gray-600 font-sans leading-relaxed mb-6">
-                                    {featuredPost.excerpt}
-                                </p>
-                            </div>
-
-                            <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#A07D5A]/10 border border-[#A07D5A]/30 flex items-center justify-center font-bold text-[#A07D5A] text-xs">
-                                        AA
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs font-bold text-gray-900 font-sans">{featuredPost.author}</h4>
-                                        <p className="text-[10px] text-gray-500 font-sans">{featuredPost.date}</p>
-                                    </div>
                                 </div>
-
-                                <Link
-                                    href={`/blog/${featuredPost.slug}`}
-                                    className="bg-[#A07D5A] hover:bg-[#866645] text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center gap-1.5 font-sans"
-                                >
-                                    Read Article <ArrowRight className="w-3.5 h-3.5" />
-                                </Link>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* ARTICLES GRID & PAGINATION */}
                     <div id="recent-publications" className="mb-12 scroll-mt-24">
@@ -159,7 +204,7 @@ export default function BlogListPage() {
 
                                         <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                                             <span className="text-xs text-gray-500 font-sans font-medium">
-                                                {post.date}
+                                                {new Date(post.date || post.createdAt).toLocaleDateString()}
                                             </span>
 
                                             <Link
@@ -190,11 +235,10 @@ export default function BlogListPage() {
                                     <button
                                         key={pageNum}
                                         onClick={() => handlePageChange(pageNum)}
-                                        className={`w-10 h-10 rounded-lg text-xs font-bold transition-all ${
-                                            currentPage === pageNum
-                                                ? "bg-[#A07D5A] text-white shadow-md"
-                                                : "bg-white border border-gray-200 text-gray-700 hover:border-[#A07D5A] hover:text-[#A07D5A]"
-                                        }`}
+                                        className={`w-10 h-10 rounded-lg text-xs font-bold transition-all ${currentPage === pageNum
+                                            ? "bg-[#A07D5A] text-white shadow-md"
+                                            : "bg-white border border-gray-200 text-gray-700 hover:border-[#A07D5A] hover:text-[#A07D5A]"
+                                            }`}
                                     >
                                         {pageNum}
                                     </button>
@@ -224,12 +268,10 @@ export default function BlogListPage() {
                     <p className="text-xs md:text-sm text-gray-300 font-sans mb-8 max-w-xl mx-auto">
                         Partner directly with Advocate Abdullah to safeguard your corporate interests and achieve favorable legal resolution.
                     </p>
-                    <Link
-                        href="/contact"
+                    <BookAppointmentBtn 
                         className="inline-block px-8 py-3.5 bg-[#A07D5A] hover:bg-[#866645] text-white transition-colors rounded text-xs uppercase tracking-widest font-semibold font-sans"
-                    >
-                        Book Appointment
-                    </Link>
+                        text="Book Appointment"
+                    />
                 </div>
             </section>
         </div>

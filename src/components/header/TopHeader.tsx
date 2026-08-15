@@ -5,20 +5,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppointmentModal } from "@/src/context/AppointmentContext";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 const navLinks = [
     { name: "Home", href: "/" },
     { name: "About Me", href: "/about" },
     { name: "Services", href: "/practice-areas" },
   
-    { name: "Case Study", href: "/case-study" },
+    { name: "Case Study", href: "/case-studies" },
     { name: "Contact", href: "/contact" },
     { name: "Blog", href: "/blog" },
     { name: "Gallery", href: "/gallery" },
 ];
 
-const TopHeader = () => {
+type TopHeaderProps = {
+    session?: any;
+};
+
+const TopHeader = ({ session }: TopHeaderProps) => {
     const pathname = usePathname();
     const { openAppointmentModal } = useAppointmentModal();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -67,13 +72,31 @@ const TopHeader = () => {
                     </nav>
 
                     {/* Action Button */}
-                    <div className="hidden md:block">
-                        <button 
-                            onClick={openAppointmentModal}
-                            className="border border-[#A07D5A] text-[#A07D5A] hover:bg-[#A07D5A] hover:text-white transition-colors px-6 py-2.5 rounded font-medium cursor-pointer"
-                        >
-                            Book Appointment
-                        </button>
+                    <div className="hidden md:flex gap-4 items-center">
+                        {session ? (
+                            <>
+                                <Link 
+                                    href="/dashboard"
+                                    className="font-medium text-gray-700 hover:text-[#A07D5A] transition-colors"
+                                >
+                                    Dashboard
+                                </Link>
+                                <button 
+                                    onClick={() => signOut({ callbackUrl: "/login" })}
+                                    className="flex items-center gap-1.5 font-medium text-red-600 hover:text-red-700 transition-colors"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <button 
+                                onClick={openAppointmentModal}
+                                className="border border-[#A07D5A] text-[#A07D5A] hover:bg-[#A07D5A] hover:text-white transition-colors px-6 py-2.5 rounded font-medium cursor-pointer"
+                            >
+                                Book Appointment
+                            </button>
+                        )}
                     </div>
 
                     {/* Mobile Menu Toggle Button */}
@@ -113,16 +136,38 @@ const TopHeader = () => {
                                 </Link>
                             );
                         })}
-                        <div className="pt-4 px-2 md:hidden">
-                            <button 
-                                onClick={() => {
-                                    closeMobileMenu();
-                                    openAppointmentModal();
-                                }}
-                                className="w-full border border-[#A07D5A] text-[#A07D5A] hover:bg-[#A07D5A] hover:text-white transition-colors px-6 py-3 rounded font-medium text-center"
-                            >
-                                Book Appointment
-                            </button>
+                        <div className="pt-4 px-2 md:hidden flex flex-col gap-3">
+                            {session ? (
+                                <>
+                                    <Link 
+                                        href="/dashboard"
+                                        onClick={closeMobileMenu}
+                                        className="w-full border border-gray-300 bg-gray-50 text-gray-700 hover:bg-gray-100 transition-colors px-6 py-3 rounded font-medium text-center block"
+                                    >
+                                        Go to Dashboard
+                                    </Link>
+                                    <button 
+                                        onClick={() => {
+                                            closeMobileMenu();
+                                            signOut({ callbackUrl: "/login" });
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 transition-colors px-6 py-3 rounded font-medium text-center"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <button 
+                                    onClick={() => {
+                                        closeMobileMenu();
+                                        openAppointmentModal();
+                                    }}
+                                    className="w-full border border-[#A07D5A] text-[#A07D5A] hover:bg-[#A07D5A] hover:text-white transition-colors px-6 py-3 rounded font-medium text-center"
+                                >
+                                    Book Appointment
+                                </button>
+                            )}
                         </div>
                     </nav>
                 </div>

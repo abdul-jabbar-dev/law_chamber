@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Calendar, Clock, User, Phone, Mail, Scale, MessageSquare, Building2, PhoneCall, ShieldCheck, MapPin, Navigation, ChevronDown } from "lucide-react";
-import { CHAMBER_CONTACT_INFO, PRACTICE_AREA_OPTIONS, TIME_SLOT_OPTIONS, getWhatsAppMessageLink, getEmailMailtoLink } from "@/src/constants/contactInfo";
+import { PRACTICE_AREA_OPTIONS, TIME_SLOT_OPTIONS, getWhatsAppMessageLink, getEmailMailtoLink } from "@/src/constants/contactInfo";
 
 interface AppointmentModalProps {
     isOpen: boolean;
@@ -15,36 +15,85 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
         phone: "",
         email: "",
         preferredDate: "",
-        preferredTime: TIME_SLOT_OPTIONS[0].value,
+        preferredTime: TIME_SLOT_OPTIONS[0],
         practiceArea: PRACTICE_AREA_OPTIONS[0].value,
         contactOption: "whatsapp", // "whatsapp" | "phone" | "chamber" | "email"
         notes: "",
     });
 
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [settings, setSettings] = useState<any>(null);
+
+    useEffect(() => {
+        if (isOpen) {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        setSettings(data.data);
+                        if (data.data.timeSlots && data.data.timeSlots.length > 0) {
+                            // Optionally override with settings if needed in the future
+                        }
+                    }
+                })
+                .catch(err => console.error("Error fetching settings:", err));
+        }
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
     // Show Preferred Date, Time Slot, and Practice Area only when WhatsApp, Email, or Chamber is selected
     const showDetails = ["whatsapp", "email", "chamber"].includes(formData.contactOption);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            // Store appointment in DB
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+        } catch (error) {
+            console.error("Error saving appointment:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
 
         if (formData.contactOption === "whatsapp") {
-            window.open(getWhatsAppMessageLink(formData), "_blank");
+            const waNumber = settings?.officeInfo?.whatsappNumber?.replace(/\D/g, '');
+            window.open(getWhatsAppMessageLink(formData, waNumber, settings?.chamberInfo?.lawyerName), "_blank");
         } else if (formData.contactOption === "phone") {
-            window.open(`tel:${CHAMBER_CONTACT_INFO.phoneRaw}`, "_self");
+            const phoneRaw = settings?.officeInfo?.phoneNumber?.replace(/[^\d+]/g, '');
+            window.open(`tel:${phoneRaw}`, "_self");
         } else if (formData.contactOption === "email") {
-            window.open(getEmailMailtoLink(formData), "_blank");
+            const email = settings?.officeInfo?.email;
+            window.open(getEmailMailtoLink(formData, email, settings?.chamberInfo?.lawyerName), "_blank");
         } else if (formData.contactOption === "chamber") {
-            window.open(CHAMBER_CONTACT_INFO.mapNavigationUrl, "_blank");
+            if (settings?.officeInfo?.chamberLocation) {
+                window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.officeInfo.chamberLocation)}`, "_blank");
+            } else if (settings?.chamberInfo?.mapNavigationUrl) {
+                window.open(settings.chamberInfo.mapNavigationUrl, "_blank");
+            }
         }
 
         setSubmitted(true);
         setTimeout(() => {
             setSubmitted(false);
             onClose();
+            // Reset form data optionally
+            setFormData(prev => ({
+                ...prev,
+                fullName: "",
+                phone: "",
+                email: "",
+                notes: ""
+            }));
         }, 2500);
     };
 
@@ -70,7 +119,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                         </div>
                         <h3 className="text-2xl font-bold text-gray-900">Appointment Initiated!</h3>
                         <p className="text-sm text-gray-600 font-sans max-w-md">
-                            Thank you, <span className="font-semibold">{formData.fullName}</span>. {CHAMBER_CONTACT_INFO.lawyerName}&apos;s team has received your request and will connect with you via <span className="font-bold uppercase text-[#A07D5A]">{formData.contactOption}</span>.
+                            Thank you, <span className="font-semibold">{formData.fullName}</span>. {settings?.chamberInfo?.lawyerName || 'Advocate'}&apos;s team has received your request and will connect with you via <span className="font-bold uppercase text-[#A07D5A]">{formData.contactOption}</span>.
                         </p>
                     </div>
                 ) : (
@@ -84,7 +133,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                 Book an Appointment
                             </h2>
                             <p className="text-xs text-gray-500 font-sans mt-0.5">
-                                Direct consultation session with Senior {CHAMBER_CONTACT_INFO.lawyerName}.
+                                Direct consultation session with Senior {settings?.chamberInfo?.lawyerName || 'Advocate'}.
                             </p>
                         </div>
 
@@ -100,11 +149,10 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "whatsapp" })}
-                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${
-                                            formData.contactOption === "whatsapp"
+                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "whatsapp"
                                                 ? "border-emerald-600 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-600"
                                                 : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                                        }`}
+                                            }`}
                                     >
                                         <MessageSquare className="w-5 h-5 text-emerald-600 mb-1 shrink-0" />
                                         <span className="text-xs font-bold truncate w-full">WhatsApp</span>
@@ -115,11 +163,10 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "phone" })}
-                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${
-                                            formData.contactOption === "phone"
+                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "phone"
                                                 ? "border-[#A07D5A] bg-[#A07D5A]/10 text-[#A07D5A] ring-1 ring-[#A07D5A]"
                                                 : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                                        }`}
+                                            }`}
                                     >
                                         <PhoneCall className="w-5 h-5 text-[#A07D5A] mb-1 shrink-0" />
                                         <span className="text-xs font-bold truncate w-full">Direct Call</span>
@@ -130,11 +177,10 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "chamber" })}
-                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${
-                                            formData.contactOption === "chamber"
+                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "chamber"
                                                 ? "border-red-600 bg-red-50 text-red-800 ring-1 ring-red-600"
                                                 : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                                        }`}
+                                            }`}
                                     >
                                         <Building2 className="w-5 h-5 text-red-600 mb-1 shrink-0" />
                                         <span className="text-xs font-bold truncate w-full">Chamber</span>
@@ -145,11 +191,10 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "email" })}
-                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${
-                                            formData.contactOption === "email"
+                                        className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "email"
                                                 ? "border-blue-600 bg-blue-50 text-blue-800 ring-1 ring-blue-600"
                                                 : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
-                                        }`}
+                                            }`}
                                     >
                                         <Mail className="w-5 h-5 text-blue-600 mb-1 shrink-0" />
                                         <span className="text-xs font-bold truncate w-full">Email</span>
@@ -185,7 +230,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         <Phone className="text-[#A07D5A] w-4 h-4 mr-2 shrink-0" />
                                         <input
                                             type="tel"
-                                            placeholder={CHAMBER_CONTACT_INFO.phone}
+                                            placeholder={settings?.officeInfo?.phoneNumber || '+880 1700 000 000'}
                                             required
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -229,9 +274,9 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                                     onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                                                     className="w-full bg-transparent outline-none text-gray-900 text-xs font-sans font-medium cursor-pointer appearance-none pr-6"
                                                 >
-                                                    {TIME_SLOT_OPTIONS.map((slot) => (
-                                                        <option key={slot.value} value={slot.value}>
-                                                            {slot.label}
+                                                    {TIME_SLOT_OPTIONS.map((slot: string) => (
+                                                        <option key={slot} value={slot}>
+                                                            {slot}
                                                         </option>
                                                     ))}
                                                 </select>
@@ -271,11 +316,11 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         <div className="flex items-center gap-2 min-w-0">
                                             <MapPin className="w-4 h-4 text-red-600 shrink-0" />
                                             <span className="text-xs font-bold text-gray-900 leading-tight">
-                                                Chamber HQ: {CHAMBER_CONTACT_INFO.address}
+                                                Chamber HQ: {settings?.officeInfo?.chamberLocation || 'Chamber Location'}
                                             </span>
                                         </div>
                                         <a
-                                            href={CHAMBER_CONTACT_INFO.mapNavigationUrl}
+                                            href={settings?.officeInfo?.chamberLocation ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.officeInfo.chamberLocation)}` : settings?.chamberInfo?.mapNavigationUrl || '#'}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded transition-colors shrink-0 self-start sm:self-auto"
@@ -285,17 +330,18 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         </a>
                                     </div>
 
-                                    {/* Embedded Live Google Map */}
-                                    <div className="w-full h-36 sm:h-40 rounded-lg overflow-hidden border border-gray-200 relative">
-                                        <iframe
-                                            title="Modal Chamber Location"
-                                            src={CHAMBER_CONTACT_INFO.mapEmbedUrl}
-                                            width="100%"
-                                            height="100%"
-                                            style={{ border: 0 }}
-                                            loading="lazy"
-                                        ></iframe>
-                                    </div>
+                                    {settings?.chamberInfo?.mapEmbedUrl && (
+                                        <div className="w-full h-36 sm:h-40 rounded-lg overflow-hidden border border-gray-200 relative">
+                                            <iframe
+                                                title="Modal Chamber Location"
+                                                src={settings?.chamberInfo?.mapEmbedUrl || ''}
+                                                width="100%"
+                                                height="100%"
+                                                style={{ border: 0 }}
+                                                loading="lazy"
+                                            ></iframe>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
@@ -316,20 +362,26 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className={`w-full font-sans font-bold py-3.5 rounded-lg text-xs uppercase tracking-widest transition-colors shadow-sm cursor-pointer mt-2 text-white ${
-                                    formData.contactOption === "whatsapp"
+                                disabled={isSubmitting}
+                                className={`w-full font-sans font-bold py-3.5 rounded-lg text-xs uppercase tracking-widest transition-colors shadow-sm mt-2 text-white disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${formData.contactOption === "whatsapp"
                                         ? "bg-emerald-600 hover:bg-emerald-700"
                                         : formData.contactOption === "phone"
-                                        ? "bg-[#A07D5A] hover:bg-[#866645]"
-                                        : formData.contactOption === "chamber"
-                                        ? "bg-red-600 hover:bg-red-700"
-                                        : "bg-blue-600 hover:bg-blue-700"
-                                }`}
+                                            ? "bg-[#A07D5A] hover:bg-[#866645]"
+                                            : formData.contactOption === "chamber"
+                                                ? "bg-red-600 hover:bg-red-700"
+                                                : "bg-blue-600 hover:bg-blue-700"
+                                    }`}
                             >
-                                {formData.contactOption === "whatsapp" && "Open WhatsApp Direct App"}
-                                {formData.contactOption === "phone" && "Open Direct Call Dialer App"}
-                                {formData.contactOption === "chamber" && "Confirm Chamber Meeting Appointment"}
-                                {formData.contactOption === "email" && "Open Email App"}
+                                {isSubmitting ? (
+                                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                                ) : (
+                                    <>
+                                        {formData.contactOption === "whatsapp" && "Open WhatsApp Direct App"}
+                                        {formData.contactOption === "phone" && "Open Direct Call Dialer App"}
+                                        {formData.contactOption === "chamber" && "Confirm Chamber Meeting Appointment"}
+                                        {formData.contactOption === "email" && "Open Email App"}
+                                    </>
+                                )}
                             </button>
                         </form>
                     </>

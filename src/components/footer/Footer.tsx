@@ -2,16 +2,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
-const Footer = () => {
+async function getSettings() {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${baseUrl}/settings`, { next: { revalidate: 60 } });
+        const data = await res.json();
+
+        if (data.success && data.data) {
+            return data.data;
+        }
+        return null;
+    } catch (error) {
+        console.error("Failed to fetch settings:", error);
+        return null;
+    }
+}
+
+const Footer = async () => {
+    const settings = await getSettings();
+    const officeInfo = settings?.officeInfo || { phoneNumber: '+011 725 6650', email: 'architouch@design.com' };
+    const socialLinks = settings?.socialLinks || { facebook: '#', x: '#', linkedin: '#' };
+
     return (
         <footer className="bg-gray-900 text-gray-300 pt-16 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                     {/* Logo & Description */}
                     <div className="flex flex-col gap-4">
-                        <Link  href="/" className="flex w-32 items-center gap-3">
+                        <Link href="/" className="flex w-32 items-center gap-3">
                             <Image src={'/svg/logoSvg.svg'} alt="Logo" width={80} height={80} style={{ width: 'auto', height: 'auto' }} />
-                         </Link>
+                        </Link>
                         <p className="text-sm text-gray-400 leading-relaxed">
                             Providing expert legal solutions with integrity, dedication, and a commitment to justice.
                         </p>
@@ -23,8 +43,9 @@ const Footer = () => {
                         <ul className="space-y-2">
                             <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
                             <li><Link href="/about" className="hover:text-white transition-colors">About Me</Link></li>
-                            <li><Link href="/case-study" className="hover:text-white transition-colors">Case Studies</Link></li>
+                            <li><Link href="/case-studies" className="hover:text-white transition-colors">Case Studies</Link></li>
                             <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                            <li><Link href="/leave-review" className="hover:text-white transition-colors">Leave a Review</Link></li>
                         </ul>
                     </div>
 
@@ -43,19 +64,19 @@ const Footer = () => {
                     <div>
                         <h4 className="text-white font-bold mb-4">Law Firm</h4>
                         <ul className="space-y-4">
-                            <li className="flex items-center gap-3">
+                            {officeInfo.phoneNumber ? <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-[#A07D5A]" />
-                                <span>+011 725 6650</span>
-                            </li>
-                            <li className="flex items-center gap-3">
+                                <span>{officeInfo.phoneNumber}</span>
+                            </li> : null}
+                            {officeInfo.email ? <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 text-[#A07D5A]" />
-                                <span>architouch@design.com</span>
-                            </li>
+                                <span>{officeInfo.email}</span>
+                            </li> : null}
                         </ul>
                         <div className="flex gap-4 mt-6">
-                            <Link href="#" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">FB</Link>
-                            <Link href="#" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">X</Link>
-                            <Link href="#" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">IN</Link>
+                            <Link href={socialLinks.facebook || "#"} target="_blank" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">FB</Link>
+                            <Link href={socialLinks.x || "#"} target="_blank" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">X</Link>
+                            <Link href={socialLinks.linkedin || "#"} target="_blank" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A07D5A] transition-colors text-xs font-bold text-white">IN</Link>
                         </div>
                     </div>
                 </div>

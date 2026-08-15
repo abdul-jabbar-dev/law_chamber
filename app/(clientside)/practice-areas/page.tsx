@@ -350,21 +350,7 @@ export default function PracticeAreasPage() {
             </section>
 
             {/* SECTION 4: Formal Call to Action */}
-            <section className="w-full bg-[#8B6B4C] py-16 px-4 sm:px-6 text-center text-white">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-2xl md:text-3xl font-semibold mb-8 tracking-wide">
-                        Ready to Discuss Your Service Needs?
-                    </h2>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button className="w-full sm:w-auto px-8 py-3.5 border border-white text-white hover:bg-white hover:text-[#8B6B4C] transition-colors rounded text-xs uppercase tracking-widest font-medium">
-                            Book Service-Specific Appointment
-                        </button>
-                        <button className="w-full sm:w-auto px-8 py-3.5 border border-white text-white hover:bg-white hover:text-[#8B6B4C] transition-colors rounded text-xs uppercase tracking-widest font-medium">
-                            Meet Our Service Leads
-                        </button>
-                    </div>
-                </div>
-            </section>
+            
 
         </div>
     );

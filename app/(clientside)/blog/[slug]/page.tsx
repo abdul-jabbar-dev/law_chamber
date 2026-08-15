@@ -3,21 +3,46 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, CheckCircle2, ShieldCheck } from "lucide-react";
-import { blogPosts } from "@/src/data/blogPosts";
 import ConsultCalloutClient from "@/src/components/blog/ConsultCalloutClient";
 import ShareButtonsClient from "@/src/components/blog/ShareButtonsClient";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
 export const dynamic = "force-dynamic";
 
+async function getBlogBySlug(slug: string) {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, { cache: 'no-store' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.data;
+    } catch (error) {
+        console.error("Error fetching blog:", error);
+        return null;
+    }
+}
+
+async function getRecentBlogs() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { cache: 'no-store' });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return data.data || [];
+    } catch (error) {
+        console.error("Error fetching blogs:", error);
+        return [];
+    }
+}
+
 export default async function BlogDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = blogPosts.find((p) => p.slug === slug);
+    const post = await getBlogBySlug(slug);
 
     if (!post) {
         notFound();
     }
 
-    const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+    const allBlogs = await getRecentBlogs();
+    const relatedPosts = allBlogs.filter((p: any) => p.slug !== post.slug).slice(0, 3);
 
     return (
         <div className="w-full min-h-screen bg-gray-50 flex flex-col font-serif">
@@ -61,7 +86,7 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
 
                         <div className="flex items-center gap-1.5 text-gray-500">
                             <Calendar className="w-4 h-4 text-[#A07D5A]" />
-                            <span>{post.date}</span>
+                            <span>{new Date(post.date || post.createdAt).toLocaleDateString()}</span>
                         </div>
 
                         <div className="flex items-center gap-1.5 text-gray-500">
@@ -110,7 +135,7 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
                                     Key Legal Takeaways
                                 </h3>
                                 <ul className="space-y-2.5 text-xs sm:text-sm text-gray-800">
-                                    {post.takeaways.map((takeaway, index) => (
+                                    {post.takeaways.map((takeaway: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                                         <li key={index} className="flex items-start gap-2">
                                             <CheckCircle2 className="w-4 h-4 text-[#A07D5A] shrink-0 mt-0.5" />
                                             <span>{takeaway}</span>
@@ -165,13 +190,13 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ sl
                                 Related Publications
                             </h3>
                             <div className="space-y-4 font-sans">
-                                {relatedPosts.map((rp) => (
-                                    <div key={rp.slug} className="group pb-3 border-b border-gray-50 last:border-0 last:pb-0">
+                                {relatedPosts.map((rp: any) => (
+                                    <div key={String(rp.slug)} className="group pb-3 border-b border-gray-50 last:border-0 last:pb-0">
                                         <span className="text-[10px] font-bold text-[#A07D5A] uppercase tracking-wider block mb-1">
                                             {rp.category}
                                         </span>
                                         <Link
-                                            href={`/blog/${rp.slug}`}
+                                            href={`/blog/${String(rp.slug)}`}
                                             className="text-xs font-bold text-gray-900 group-hover:text-[#A07D5A] transition-colors leading-snug block mb-1"
                                         >
                                             {rp.title}

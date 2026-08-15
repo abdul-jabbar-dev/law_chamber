@@ -1,11 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
-import { blogPosts } from "@/src/data/blogPosts";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
 
-const LatestPosts = () => {
-    // Get the top 3 latest blog posts
-    const latestArticles = blogPosts.slice(0, 3);
+async function getLatestPosts() {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${baseUrl}/blogs`, { next: { revalidate: 60 } });
+        const data = await res.json();
+
+        if (data.success && data.data) {
+            return data.data.slice(0, 3);
+        }
+        return [];
+    } catch (error) {
+        console.error("Failed to fetch latest posts:", error);
+        return [];
+    }
+}
+
+const LatestPosts = async () => {
+    const latestArticles = await getLatestPosts();
+
+    if (!latestArticles || latestArticles.length === 0) return null;
 
     return (
         <section className="py-20 bg-gray-50 border-b border-gray-100 font-serif">
@@ -34,7 +52,7 @@ const LatestPosts = () => {
 
                 {/* Grid of 3 Latest Articles */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {latestArticles.map((post) => (
+                    {latestArticles.map((post: any) => (
                         <article
                             key={post.slug}
                             className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-full group"
@@ -57,9 +75,9 @@ const LatestPosts = () => {
                                 <div>
                                     <div className="flex items-center gap-2 text-xs text-gray-400 font-sans mb-3">
                                         <Clock className="w-3.5 h-3.5 text-[#A07D5A]" />
-                                        <span>{post.readTime}</span>
+                                        <span>{post.readTime || '5 min read'}</span>
                                         <span>•</span>
-                                        <span>{post.date}</span>
+                                        <span suppressHydrationWarning>{new Date(post.date || post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     </div>
 
                                     <h3 className="text-lg font-bold text-gray-900 leading-snug mb-3 group-hover:text-[#A07D5A] transition-colors">
