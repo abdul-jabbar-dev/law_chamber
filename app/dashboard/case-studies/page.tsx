@@ -13,7 +13,7 @@ export default function CaseStudiesDashboard() {
   const fetchCaseStudies = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
       const data = await res.json();
       if (data.success) {
         setCaseStudies(data.data);
@@ -27,14 +27,14 @@ export default function CaseStudiesDashboard() {
 
   const handleReorder = async (newOrder: any[]) => {
     setCaseStudies(newOrder); // Optimistic UI update
-    
+
     const updates = newOrder.map((study, index) => ({
       id: study._id,
       order: index
     }));
 
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/reorder`, {
+      await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/reorder`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ updates })
@@ -68,10 +68,10 @@ export default function CaseStudiesDashboard() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this case study?")) return;
-    
+
     setDeletingId(id);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -92,11 +92,11 @@ export default function CaseStudiesDashboard() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-4">
-      
+
           <h1 className="text-2xl font-bold text-gray-800">Case Studies Management</h1>
         </div>
         <div className="flex gap-3">
-          <button 
+          <button
             onClick={fetchCaseStudies}
             className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium"
           >
@@ -178,7 +178,7 @@ export default function CaseStudiesDashboard() {
                           <ArrowDown className="w-4 h-4" />
                         </button>
                       </div>
-                      
+
                       <Link
                         href={`/dashboard/case-studies/edit/${study._id}`}
                         className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors flex items-center"

@@ -27,7 +27,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
 
     useEffect(() => {
         if (isOpen) {
-            fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+            fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.data) {
@@ -52,7 +52,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
 
         try {
             // Store appointment in DB
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
+            await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,8 +150,8 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "whatsapp" })}
                                         className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "whatsapp"
-                                                ? "border-emerald-600 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-600"
-                                                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                                            ? "border-emerald-600 bg-emerald-50 text-emerald-800 ring-1 ring-emerald-600"
+                                            : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         <MessageSquare className="w-5 h-5 text-emerald-600 mb-1 shrink-0" />
@@ -164,8 +164,8 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "phone" })}
                                         className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "phone"
-                                                ? "border-[#A07D5A] bg-[#A07D5A]/10 text-[#A07D5A] ring-1 ring-[#A07D5A]"
-                                                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                                            ? "border-[#A07D5A] bg-[#A07D5A]/10 text-[#A07D5A] ring-1 ring-[#A07D5A]"
+                                            : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         <PhoneCall className="w-5 h-5 text-[#A07D5A] mb-1 shrink-0" />
@@ -178,8 +178,8 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "chamber" })}
                                         className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "chamber"
-                                                ? "border-red-600 bg-red-50 text-red-800 ring-1 ring-red-600"
-                                                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                                            ? "border-red-600 bg-red-50 text-red-800 ring-1 ring-red-600"
+                                            : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         <Building2 className="w-5 h-5 text-red-600 mb-1 shrink-0" />
@@ -192,8 +192,8 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                         type="button"
                                         onClick={() => setFormData({ ...formData, contactOption: "email" })}
                                         className={`flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl border transition-all text-center cursor-pointer min-w-0 ${formData.contactOption === "email"
-                                                ? "border-blue-600 bg-blue-50 text-blue-800 ring-1 ring-blue-600"
-                                                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                                            ? "border-blue-600 bg-blue-50 text-blue-800 ring-1 ring-blue-600"
+                                            : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         <Mail className="w-5 h-5 text-blue-600 mb-1 shrink-0" />
@@ -364,12 +364,12 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
                                 type="submit"
                                 disabled={isSubmitting}
                                 className={`w-full font-sans font-bold py-3.5 rounded-lg text-xs uppercase tracking-widest transition-colors shadow-sm mt-2 text-white disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${formData.contactOption === "whatsapp"
-                                        ? "bg-emerald-600 hover:bg-emerald-700"
-                                        : formData.contactOption === "phone"
-                                            ? "bg-[#A07D5A] hover:bg-[#866645]"
-                                            : formData.contactOption === "chamber"
-                                                ? "bg-red-600 hover:bg-red-700"
-                                                : "bg-blue-600 hover:bg-blue-700"
+                                    ? "bg-emerald-600 hover:bg-emerald-700"
+                                    : formData.contactOption === "phone"
+                                        ? "bg-[#A07D5A] hover:bg-[#866645]"
+                                        : formData.contactOption === "chamber"
+                                            ? "bg-red-600 hover:bg-red-700"
+                                            : "bg-blue-600 hover:bg-blue-700"
                                     }`}
                             >
                                 {isSubmitting ? (

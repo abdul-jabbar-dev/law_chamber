@@ -9,7 +9,7 @@ export default function GalleryUploadPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -44,7 +44,7 @@ export default function GalleryUploadPage() {
       if (description) formData.append("description", description)
       formData.append("image", imageFile)
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, {
         method: 'POST',
         body: formData,
       })
@@ -84,12 +84,12 @@ export default function GalleryUploadPage() {
 
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
             <div className="space-y-6">
-              
+
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-slate-700">Image File *</label>
                 <input type="file" accept="image/*" onChange={handleImageChange} required className="hidden" ref={fileInputRef} />
-                
-                <div 
+
+                <div
                   onClick={() => fileInputRef.current?.click()}
                   className="relative w-full h-64 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-slate-100 hover:border-purple-400 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group"
                 >
@@ -114,24 +114,24 @@ export default function GalleryUploadPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700">Image Title *</label>
-                <input 
-                  required 
-                  type="text" 
-                  value={title} 
-                  onChange={e => setTitle(e.target.value)} 
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 outline-none transition-all placeholder:text-slate-400" 
-                  placeholder="e.g. Annual Legal Conference 2026" 
+                <input
+                  required
+                  type="text"
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 outline-none transition-all placeholder:text-slate-400"
+                  placeholder="e.g. Annual Legal Conference 2026"
                 />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700">Description (Optional)</label>
-                <textarea 
-                  value={description} 
-                  onChange={e => setDescription(e.target.value)} 
-                  rows={3} 
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 outline-none transition-all placeholder:text-slate-400 resize-none" 
-                  placeholder="A short caption or description of the image..." 
+                <textarea
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                  rows={3}
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 outline-none transition-all placeholder:text-slate-400 resize-none"
+                  placeholder="A short caption or description of the image..."
                 />
               </div>
 

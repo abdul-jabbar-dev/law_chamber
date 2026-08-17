@@ -5,7 +5,7 @@ import BookAppointmentBtn from "@/src/components/common/BookAppointmentBtn";
 
 async function getProfile() {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
+        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
             cache: 'no-store'
         });
         if (!res.ok) return null;
@@ -19,7 +19,7 @@ async function getProfile() {
 
 async function getTeamMembers() {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`, {
+        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`, {
             cache: 'no-store'
         });
         if (!res.ok) return [];
@@ -33,7 +33,7 @@ async function getTeamMembers() {
 
 async function getSettings() {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
+        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
             cache: 'no-store'
         });
         if (!res.ok) return null;
@@ -63,8 +63,8 @@ export default async function AboutPage() {
     const keyExpertise = profile?.keyExpertise;
     const keyAchievements = profile?.keyAchievements
     const qualifications = profile?.qualifications
-    const phone = settings?.officeInfo?.phoneNumber; 
- 
+    const phone = settings?.officeInfo?.phoneNumber;
+
 
     // Split team members into key partners and regular members
     const keyPartners = teamMembers.filter((m: any) => m.isKeyPartner);
@@ -116,8 +116,8 @@ export default async function AboutPage() {
                                 {description}
                             </p>
                             <div className="flex flex-wrap items-center gap-4">
-                                <BookAppointmentBtn 
-                                    className="bg-[#A07D5A] hover:bg-[#866645] text-white text-xs sm:text-sm font-semibold py-3 px-6 rounded-lg transition-colors font-sans uppercase tracking-wider shadow-sm" 
+                                <BookAppointmentBtn
+                                    className="bg-[#A07D5A] hover:bg-[#866645] text-white text-xs sm:text-sm font-semibold py-3 px-6 rounded-lg transition-colors font-sans uppercase tracking-wider shadow-sm"
                                 />
                                 <a
                                     href={`tel:${phone || ''}`}
@@ -228,7 +228,7 @@ export default async function AboutPage() {
                     {/* Team Members & Partner Grid */}
                     {teamMembers.length > 0 && (
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-16">
-                            
+
                             {/* Regular Members Cards */}
                             {regularMembers.map((member: any) => (
                                 <div key={member._id} className="md:col-span-4 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden p-6 flex flex-col items-center text-center">
@@ -343,11 +343,11 @@ export default async function AboutPage() {
                         Partner with an experienced legal advocate dedicated to delivering high-impact solutions for your case.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <BookAppointmentBtn 
+                        <BookAppointmentBtn
                             className="w-full sm:w-auto px-8 py-3.5 bg-[#A07D5A] hover:bg-[#866645] text-white transition-colors rounded-lg text-xs md:text-sm uppercase tracking-widest font-semibold font-sans"
                             text="Schedule An Appointment"
                         />
-                       
+
                     </div>
 
                 </div>

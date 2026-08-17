@@ -14,7 +14,7 @@ export default function BlogForm({ initialData, isEdit }: BlogFormProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  
+
   const [title, setTitle] = useState(initialData?.title || "")
   const [category, setCategory] = useState(initialData?.category || "")
   const [excerpt, setExcerpt] = useState(initialData?.excerpt || "")
@@ -64,15 +64,15 @@ export default function BlogForm({ initialData, isEdit }: BlogFormProps) {
       formData.append("contentHtml", contentHtml)
       formData.append("featured", String(featured))
       if (quote) formData.append("quote", quote)
-      
+
       const filteredTakeaways = takeaways.filter(t => t.trim() !== "")
       formData.append("takeaways", JSON.stringify(filteredTakeaways))
-      
+
       if (imageFile) {
         formData.append("image", imageFile)
       }
 
-      const url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs${isEdit ? `/${initialData.slug}` : ''}`
+      const url = `${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs${isEdit ? `/${initialData.slug}` : ''}`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {
@@ -112,7 +112,7 @@ export default function BlogForm({ initialData, isEdit }: BlogFormProps) {
           </div>
           <h2 className="text-xl font-bold text-slate-800">Basic Details</h2>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2 col-span-1 md:col-span-2">
             <label className="text-sm font-semibold text-slate-700">Article Title *</label>
@@ -172,8 +172,8 @@ export default function BlogForm({ initialData, isEdit }: BlogFormProps) {
           <div className="space-y-3">
             <label className="text-sm font-semibold text-slate-700">Cover Image {isEdit ? '(Optional)' : '*'}</label>
             <input type="file" accept="image/*" onChange={handleImageChange} required={!isEdit} className="hidden" ref={fileInputRef} />
-            
-            <div 
+
+            <div
               onClick={() => fileInputRef.current?.click()}
               className="relative w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-slate-100 hover:border-blue-400 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden group"
             >

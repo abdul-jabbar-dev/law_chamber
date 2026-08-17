@@ -11,7 +11,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState({
     title: "",
     practiceArea: "",
@@ -26,7 +26,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
   useEffect(() => {
     const fetchCaseStudy = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
+        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
         const data = await res.json();
         if (data.success) {
           const study = data.data.find((item: any) => item._id === id);
@@ -83,13 +83,13 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
       submitData.append("solution", formData.solution);
       submitData.append("result", formData.result);
       submitData.append("featured", String(formData.featured));
-      
+
       const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       if (fileInput && fileInput.files && fileInput.files[0]) {
         submitData.append("image", fileInput.files[0]);
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
         method: "PUT",
         body: submitData,
       });
@@ -121,7 +121,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <Link 
+        <Link
           href="/dashboard/case-studies"
           className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
         >
@@ -132,28 +132,28 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Title *</label>
-              <input 
-                type="text" 
-                name="title" 
+              <input
+                type="text"
+                name="title"
                 value={formData.title}
                 onChange={handleChange}
-                required 
+                required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Practice Area *</label>
-              <input 
-                type="text" 
-                name="practiceArea" 
+              <input
+                type="text"
+                name="practiceArea"
                 value={formData.practiceArea}
                 onChange={handleChange}
-                required 
+                required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               />
             </div>
@@ -161,22 +161,22 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">Client Name / Description</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               name="clientName"
               value={formData.clientName}
-              onChange={handleChange} 
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
             />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">The Challenge *</label>
-            <textarea 
-              name="challenge" 
+            <textarea
+              name="challenge"
               value={formData.challenge}
               onChange={handleChange}
-              required 
+              required
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
             />
@@ -184,11 +184,11 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">Our Solution *</label>
-            <textarea 
-              name="solution" 
+            <textarea
+              name="solution"
               value={formData.solution}
               onChange={handleChange}
-              required 
+              required
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
             />
@@ -196,11 +196,11 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">The Result *</label>
-            <textarea 
-              name="result" 
+            <textarea
+              name="result"
               value={formData.result}
               onChange={handleChange}
-              required 
+              required
               rows={3}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
             />
@@ -209,13 +209,13 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">Featured Case Study</label>
             <div className="flex items-center gap-2">
-              <input 
-                type="checkbox" 
-                name="featured" 
-                id="featured" 
+              <input
+                type="checkbox"
+                name="featured"
+                id="featured"
                 checked={formData.featured}
                 onChange={handleChange}
-                className="w-4 h-4 text-[#A07D5A]" 
+                className="w-4 h-4 text-[#A07D5A]"
               />
               <label htmlFor="featured" className="text-sm text-gray-600">Highlight this on the homepage or public list</label>
             </div>
@@ -243,13 +243,13 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex justify-end gap-4">
-            <Link 
+            <Link
               href="/dashboard"
               className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition-colors"
             >
               Dashboard
             </Link>
-            <Link 
+            <Link
               href="/dashboard/case-studies"
               className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition-colors"
             >

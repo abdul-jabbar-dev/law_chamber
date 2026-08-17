@@ -8,7 +8,7 @@ export default function FloatingWhatsApp() {
     const [waLink, setWaLink] = useState(getWhatsAppMessageLink());
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+        fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {

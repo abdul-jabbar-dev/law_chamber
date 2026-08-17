@@ -6,7 +6,7 @@ import BookAppointmentBtn from "@/src/components/common/BookAppointmentBtn";
 
 async function getCaseStudyBySlug(slug: string) {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${slug}`, {
+        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${slug}`, {
             cache: 'no-store'
         });
         if (!res.ok) {

@@ -25,7 +25,7 @@ export default function TestimonialsManagement() {
 
     const fetchTestimonials = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials`);
+            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials`);
             const data = await res.json();
             if (data.success && data.data) {
                 setTestimonials(data.data);
@@ -44,7 +44,7 @@ export default function TestimonialsManagement() {
         setIsDeleting(id);
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials/${id}`, {
+            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`

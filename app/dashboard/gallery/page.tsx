@@ -6,7 +6,7 @@ import GalleryList from "./components/GalleryList"
 
 async function getGalleryItems() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, { cache: 'no-store' });
     if (!res.ok) return null;
     const data = await res.json();
     return data.data;
@@ -18,7 +18,7 @@ async function getGalleryItems() {
 
 export default async function GalleryPage() {
   const session = await auth()
-  
+
   if (!session?.user) {
     redirect("/login")
   }
@@ -29,15 +29,15 @@ export default async function GalleryPage() {
     <div className="min-h-screen bg-slate-50 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-4 mb-6">
-        
+
           <h1 className="text-3xl font-bold text-slate-900">Gallery Management</h1>
         </div>
 
         <div className="bg-white rounded-t-2xl shadow-sm border-x border-t border-slate-200 overflow-hidden">
           <div className="px-6 py-5 flex justify-between items-center bg-slate-50/50">
             <h2 className="font-semibold text-slate-800">Uploaded Images</h2>
-            <Link 
-              href="/dashboard/gallery/create" 
+            <Link
+              href="/dashboard/gallery/create"
               className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
             >
               <Plus className="w-4 h-4" />

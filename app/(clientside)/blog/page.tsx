@@ -15,7 +15,7 @@ export default function BlogListPage() {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`);
+                const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`);
                 const data = await res.json();
                 if (data.success) {
                     // Sort blogs by newest first
@@ -268,7 +268,7 @@ export default function BlogListPage() {
                     <p className="text-xs md:text-sm text-gray-300 font-sans mb-8 max-w-xl mx-auto">
                         Partner directly with Advocate Abdullah to safeguard your corporate interests and achieve favorable legal resolution.
                     </p>
-                    <BookAppointmentBtn 
+                    <BookAppointmentBtn
                         className="inline-block px-8 py-3.5 bg-[#A07D5A] hover:bg-[#866645] text-white transition-colors rounded text-xs uppercase tracking-widest font-semibold font-sans"
                         text="Book Appointment"
                     />

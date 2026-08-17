@@ -9,10 +9,10 @@ const ChamberInfo = () => {
     useEffect(() => {
         const fetchChamberInfo = async () => {
             try {
-                const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+                const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
                 const res = await fetch(`${baseUrl}/profile`);
                 const data = await res.json();
-                
+
                 if (data.success && data.data && data.data.chamberInfo) {
                     setChamberInfo(data.data.chamberInfo);
                 }

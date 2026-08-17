@@ -8,7 +8,7 @@ export default function ProfileManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
-  
+
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -32,7 +32,7 @@ export default function ProfileManagement() {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`);
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`);
       const data = await res.json();
       if (data.success && data.data) {
         const p = data.data;
@@ -124,14 +124,14 @@ export default function ProfileManagement() {
     try {
       const token = localStorage.getItem("token");
       const submitData = new FormData();
-      
+
       submitData.append("name", formData.name);
       submitData.append("role", formData.role);
       submitData.append("subtitle", formData.subtitle);
       submitData.append("description", formData.description);
       submitData.append("biography", formData.biography);
       submitData.append("biographySecondary", formData.biographySecondary);
-      
+
       // Filter out empty strings/objects before sending
       const filteredExpertise = formData.keyExpertise.filter(item => item.trim() !== "");
       const filteredAchievements = formData.keyAchievements.filter(item => item.trim() !== "");
@@ -143,12 +143,12 @@ export default function ProfileManagement() {
       submitData.append("services", JSON.stringify(filteredServices));
       submitData.append("qualifications", JSON.stringify(filteredQuals));
       submitData.append("chamberInfo", JSON.stringify(formData.chamberInfo));
-      
+
       if (imageFile) {
         submitData.append("image", imageFile);
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -198,11 +198,11 @@ export default function ProfileManagement() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        
+
         {/* Basic Info Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h2 className="text-xl font-semibold mb-6 border-b pb-3">Basic Information</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
@@ -263,7 +263,7 @@ export default function ProfileManagement() {
 
         {/* Dynamic Arrays Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
+
           {/* Key Expertise */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex justify-between items-center mb-6 border-b pb-3">
@@ -303,7 +303,7 @@ export default function ProfileManagement() {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex justify-between items-center mb-6 border-b pb-3">
               <h2 className="text-xl font-semibold">Key Achievements</h2>
@@ -333,7 +333,7 @@ export default function ProfileManagement() {
               <Plus className="w-4 h-4" /> Add Qualification
             </button>
           </div>
-          
+
           <div className="space-y-4">
             {formData.qualifications.map((qual, index) => (
               <div key={index} className="flex flex-col sm:flex-row gap-3 items-start p-4 border border-gray-100 bg-gray-50 rounded-lg">
@@ -362,7 +362,7 @@ export default function ProfileManagement() {
         {/* Chamber Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h2 className="text-xl font-semibold mb-6 border-b pb-3">Chamber Information</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
@@ -389,8 +389,8 @@ export default function ProfileManagement() {
 
         {/* Submit Actions */}
         <div className="flex justify-end pt-4">
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isSaving}
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
           >

@@ -24,7 +24,7 @@ export default function BlogList({ initialBlogs }: BlogListProps) {
     setError(null)
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, {
         method: "DELETE",
       })
 
@@ -96,7 +96,7 @@ export default function BlogList({ initialBlogs }: BlogListProps) {
                   <Link href={`/dashboard/blogs/edit/${blog.slug}`} className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors">
                     <Edit className="w-4 h-4" />
                   </Link>
-                  <button 
+                  <button
                     onClick={() => handleDelete(blog.slug, blog._id)}
                     disabled={deletingId === blog._id}
                     className="p-2 text-rose-600 hover:text-rose-800 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-50"

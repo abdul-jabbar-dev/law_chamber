@@ -25,8 +25,8 @@ export default function CreateCaseStudy() {
 
     try {
       const formData = new FormData(e.currentTarget);
-      
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
+
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
         method: "POST",
         body: formData,
       });
@@ -50,7 +50,7 @@ export default function CreateCaseStudy() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <Link 
+        <Link
           href="/dashboard/case-studies"
           className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
         >
@@ -61,14 +61,14 @@ export default function CreateCaseStudy() {
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Title *</label>
-              <input 
-                type="text" 
-                name="title" 
-                required 
+              <input
+                type="text"
+                name="title"
+                required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
                 placeholder="e.g. Corporate Merger Defense"
               />
@@ -76,10 +76,10 @@ export default function CreateCaseStudy() {
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Practice Area *</label>
-              <input 
-                type="text" 
-                name="practiceArea" 
-                required 
+              <input
+                type="text"
+                name="practiceArea"
+                required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
                 placeholder="e.g. Corporate Law"
               />
@@ -88,9 +88,9 @@ export default function CreateCaseStudy() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">Client Name / Description</label>
-            <input 
-              type="text" 
-              name="clientName" 
+            <input
+              type="text"
+              name="clientName"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               placeholder="e.g. Fortune 500 Tech Company (Optional)"
             />
@@ -98,9 +98,9 @@ export default function CreateCaseStudy() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">The Challenge *</label>
-            <textarea 
-              name="challenge" 
-              required 
+            <textarea
+              name="challenge"
+              required
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               placeholder="Describe the client's problem..."
@@ -109,9 +109,9 @@ export default function CreateCaseStudy() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">Our Solution *</label>
-            <textarea 
-              name="solution" 
-              required 
+            <textarea
+              name="solution"
+              required
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               placeholder="Describe the strategy and actions taken..."
@@ -120,9 +120,9 @@ export default function CreateCaseStudy() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">The Result *</label>
-            <textarea 
-              name="result" 
-              required 
+            <textarea
+              name="result"
+              required
               rows={3}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A07D5A] focus:border-transparent outline-none transition-all"
               placeholder="Describe the outcome..."
@@ -159,7 +159,7 @@ export default function CreateCaseStudy() {
           </div>
 
           <div className="pt-6 border-t border-gray-100 flex justify-end gap-4">
-            <Link 
+            <Link
               href="/dashboard/case-studies"
               className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition-colors"
             >

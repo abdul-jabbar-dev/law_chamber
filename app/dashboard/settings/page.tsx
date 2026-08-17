@@ -21,7 +21,7 @@ export default function SettingsManagement() {
 
     const fetchSettings = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`);
+            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`);
             if (res.ok) {
                 const data = await res.json();
                 if (data.data) {
@@ -48,7 +48,7 @@ export default function SettingsManagement() {
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
+            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -182,11 +182,11 @@ export default function SettingsManagement() {
                     <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Appointment Time Slots</h2>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Available Time Slots (Comma Separated)</label>
-                        <textarea 
-                            value={settings.timeSlots.join(', ')} 
-                            onChange={(e) => setSettings(prev => ({ ...prev, timeSlots: e.target.value.split(',').map(s => s.trim()).filter(s => s) }))} 
-                            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-900" 
-                            rows={3} 
+                        <textarea
+                            value={settings.timeSlots.join(', ')}
+                            onChange={(e) => setSettings(prev => ({ ...prev, timeSlots: e.target.value.split(',').map(s => s.trim()).filter(s => s) }))}
+                            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-900"
+                            rows={3}
                             placeholder="10:00 AM - Morning, 12:00 PM - Midday"
                         ></textarea>
                         <p className="text-xs text-gray-500 mt-1">Users will see these options when booking an appointment.</p>

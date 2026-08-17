@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 async function getSettings() {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
         const res = await fetch(`${baseUrl}/settings`, { next: { revalidate: 60 } });
         const data = await res.json();
 

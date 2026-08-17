@@ -25,7 +25,7 @@ export default function InquiriesDashboard() {
 
   const fetchInquiries = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`);
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`);
       const data = await res.json();
       if (data.success) {
         setInquiries(data.data);
@@ -44,7 +44,7 @@ export default function InquiriesDashboard() {
   const handleUpdateStatus = async (id: string, newStatus: "Pending" | "Reviewed") => {
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -64,7 +64,7 @@ export default function InquiriesDashboard() {
     if (!window.confirm("Are you sure you want to delete this inquiry?")) return;
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
+      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -79,7 +79,7 @@ export default function InquiriesDashboard() {
   };
 
   const filteredInquiries = inquiries.filter(inq => filter === "All" || inq.status === filter);
-  
+
   // Pagination logic
   const totalPages = Math.ceil(filteredInquiries.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -94,7 +94,7 @@ export default function InquiriesDashboard() {
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-4">
-          
+
           <div>
             <h1 className="text-xl font-bold text-slate-900">Inquiries Inbox</h1>
             <p className="text-sm text-slate-500">Manage your contact form submissions.</p>
@@ -109,11 +109,10 @@ export default function InquiriesDashboard() {
             <button
               key={f}
               onClick={() => setFilter(f as any)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                filter === f
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === f
                   ? "bg-slate-800 text-white"
                   : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
-              }`}
+                }`}
             >
               {f}
             </button>
@@ -208,7 +207,7 @@ export default function InquiriesDashboard() {
                 </tbody>
               </table>
             </div>
-            
+
             {/* Pagination Controls */}
             {totalPages > 1 && (
               <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50">
