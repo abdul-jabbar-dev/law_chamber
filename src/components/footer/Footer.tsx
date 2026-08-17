@@ -62,7 +62,7 @@ const Footer = async () => {
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="text-white font-bold mb-4">Law Firm</h4>
+                        <h4 className="text-white font-bold mb-4">Legal Advocare Bureau</h4>
                         <ul className="space-y-4">
                             {officeInfo.phoneNumber ? <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-[#A07D5A]" />
