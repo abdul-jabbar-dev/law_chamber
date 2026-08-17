@@ -26,7 +26,7 @@ export default function CreateCaseStudy() {
     try {
       const formData = new FormData(e.currentTarget);
 
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
         method: "POST",
         body: formData,
       });

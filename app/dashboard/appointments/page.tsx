@@ -27,7 +27,7 @@ export default function AppointmentsDashboard() {
 
   const fetchAppointments = async () => {
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}` // Assuming token is used if required, though other pages don't show it explicitly
         }
@@ -50,7 +50,7 @@ export default function AppointmentsDashboard() {
   const handleUpdateStatus = async (id: string, newStatus: "Pending" | "Reviewed") => {
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function AppointmentsDashboard() {
     if (!window.confirm("Are you sure you want to delete this appointment request?")) return;
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments/${id}`, {
         method: "DELETE",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
@@ -121,8 +121,8 @@ export default function AppointmentsDashboard() {
               key={f}
               onClick={() => setFilter(f as any)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === f
-                  ? "bg-slate-800 text-white"
-                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+                ? "bg-slate-800 text-white"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
                 }`}
             >
               {f}

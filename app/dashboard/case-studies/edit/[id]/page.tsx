@@ -26,7 +26,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
   useEffect(() => {
     const fetchCaseStudy = async () => {
       try {
-        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
         const data = await res.json();
         if (data.success) {
           const study = data.data.find((item: any) => item._id === id);
@@ -89,7 +89,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
         submitData.append("image", fileInput.files[0]);
       }
 
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
         method: "PUT",
         body: submitData,
       });

@@ -15,19 +15,19 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Law Chamber | Expert Legal Services & Practice",
+  title: "Legal Advocare Bureau-LAB | Expert Legal Services & Practice",
   description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
   openGraph: {
-    title: "Law Chamber | Expert Legal Services",
+    title: "Legal Advocare Bureau-LAB | Expert Legal Services",
     description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
     url: "https://yourlawfirm.com",
-    siteName: "Law Chamber",
+    siteName: "Legal Advocare Bureau-LAB",
     images: [
       {
         url: "https://yourlawfirm.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Law Chamber Premium Services",
+        alt: "Legal Advocare Bureau-LAB Premium Services",
       },
     ],
     locale: "en_US",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Law Chamber | Expert Legal Services",
+    title: "Legal Advocare Bureau-LAB | Expert Legal Services",
     description: "Expert Legal Guidance and Strategic Representation for Clients in Bangladesh and Globally.",
     images: ["https://yourlawfirm.com/og-image.jpg"],
   },
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${playfair.variable} ${jakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col"> 
+      <body className="min-h-full flex flex-col">
         <AppointmentProvider>
           {children}
           <FloatingWhatsApp />

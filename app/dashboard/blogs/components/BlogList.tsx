@@ -24,7 +24,7 @@ export default function BlogList({ initialBlogs }: BlogListProps) {
     setError(null)
 
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, {
         method: "DELETE",
       })
 

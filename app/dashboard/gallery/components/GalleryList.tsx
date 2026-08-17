@@ -24,7 +24,7 @@ export default function GalleryList({ initialItems }: GalleryListProps) {
     setError(null)
 
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery/${id}`, {
         method: "DELETE",
       })
 

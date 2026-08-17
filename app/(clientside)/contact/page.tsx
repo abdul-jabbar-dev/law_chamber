@@ -22,7 +22,7 @@ export default function ContactPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {
@@ -41,7 +41,7 @@ export default function ContactPage() {
         const url = `https://api.callmebot.com/whatsapp.php?phone=${settings?.officeInfo?.whatsappNumber}&text=New+Message+from+${formData.fullName}&apikey=YOUR_API_KEY`;
         await fetch(url);
         try {
-            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -299,7 +299,7 @@ export default function ContactPage() {
                     <section className="w-full relative h-[320px] md:h-[400px] overflow-hidden border-b border-gray-200">
                         <Image
                             src="/img/image.png"
-                            alt="Law Chamber Interiors"
+                            alt="Legal Advocare Bureau-LAB Interiors"
                             fill
                             className="object-cover"
                         />
@@ -312,7 +312,7 @@ export default function ContactPage() {
                     <section className="w-full relative h-[450px] md:h-[520px] overflow-hidden border-b border-gray-200">
 
                         <iframe
-                            title="Law Chamber Main Office Location"
+                            title="Legal Advocare Bureau-LAB Main Office Location"
                             src={settings?.chamberInfo?.mapEmbedUrl || undefined}
                             width="100%"
 

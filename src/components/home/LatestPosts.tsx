@@ -6,7 +6,7 @@ import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from
 
 async function getLatestPosts() {
     try {
-        const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
         const res = await fetch(`${baseUrl}/blogs`, { next: { revalidate: 60 } });
         const data = await res.json();
 

@@ -45,7 +45,7 @@ const TopHeader = ({ session }: TopHeaderProps) => {
                         <div className=" w-14 h-14">
                             <Image src={'/svg/logoSvg.svg'} alt="Logo" width={50} height={50} style={{ width: 'auto', height: 'auto' }} />
                         </div>
-                        <span className="text-2xl font-bold text-gray-700 tracking-wide font-serif">Law Firm</span>
+                        <span className="text-3xl font-bold text-gray-700 tracking-wide font-serif">LAB</span>
                     </Link>
 
                     {/* Navigation Links */}

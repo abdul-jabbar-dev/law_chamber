@@ -31,7 +31,7 @@ export default function TeamManagement() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`);
       const data = await res.json();
       if (data.success) {
         setMembers(data.data);
@@ -88,7 +88,7 @@ export default function TeamManagement() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -146,8 +146,8 @@ export default function TeamManagement() {
       }
 
       const url = formData.id
-        ? `${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/${formData.id}`
-        : `${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`;
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/${formData.id}`
+        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`;
 
       const method = formData.id ? "PUT" : "POST";
 
@@ -194,7 +194,7 @@ export default function TeamManagement() {
 
     try {
       const token = localStorage.getItem("token");
-      await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/reorder`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members/reorder`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

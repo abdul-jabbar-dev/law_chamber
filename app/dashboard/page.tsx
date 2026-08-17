@@ -6,7 +6,7 @@ import { LogOut, LayoutDashboard, FolderOpen, Users, Settings, Mail, Calendar } 
 
 async function getDashboardStats() {
   try {
-    const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
     const [inqRes, caseRes, blogRes, profileRes, teamRes] = await Promise.all([
       fetch(`${baseUrl}/inquiries`, { cache: 'no-store' }),
       fetch(`${baseUrl}/case-studies`, { cache: 'no-store' }),

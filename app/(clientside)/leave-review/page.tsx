@@ -2,7 +2,7 @@ import ReviewForm from "@/src/components/home/ReviewForm";
 import { Star } from "lucide-react";
 
 export const metadata = {
-    title: "Leave a Review | Law Chamber",
+    title: "Leave a Review | Legal Advocare Bureau-LAB",
     description: "Share your experience with our legal services.",
 };
 

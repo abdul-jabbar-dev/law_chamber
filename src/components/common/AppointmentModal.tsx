@@ -27,7 +27,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
 
     useEffect(() => {
         if (isOpen) {
-            fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
+            fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.data) {
@@ -52,7 +52,7 @@ export default function AppointmentModal({ isOpen, onClose }: AppointmentModalPr
 
         try {
             // Store appointment in DB
-            await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/appointments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

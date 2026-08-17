@@ -72,7 +72,7 @@ export default function BlogForm({ initialData, isEdit }: BlogFormProps) {
         formData.append("image", imageFile)
       }
 
-      const url = `${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs${isEdit ? `/${initialData.slug}` : ''}`
+      const url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs${isEdit ? `/${initialData.slug}` : ''}`
       const method = isEdit ? 'PUT' : 'POST'
 
       const res = await fetch(url, {

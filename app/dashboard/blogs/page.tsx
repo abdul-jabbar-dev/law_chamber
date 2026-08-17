@@ -6,7 +6,7 @@ import BlogList from "./components/BlogList"
 
 async function getBlogs() {
   try {
-    const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`, { cache: 'no-store' });
     if (!res.ok) return null;
     const data = await res.json();
     return data.data; // assuming { success: true, data: [...] }

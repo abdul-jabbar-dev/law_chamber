@@ -15,7 +15,7 @@ export default function BlogListPage() {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs`);
                 const data = await res.json();
                 if (data.success) {
                     // Sort blogs by newest first

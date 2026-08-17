@@ -13,7 +13,7 @@ export default function CaseStudiesDashboard() {
   const fetchCaseStudies = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`);
       const data = await res.json();
       if (data.success) {
         setCaseStudies(data.data);
@@ -34,7 +34,7 @@ export default function CaseStudiesDashboard() {
     }));
 
     try {
-      await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/reorder`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/reorder`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ updates })
@@ -71,7 +71,7 @@ export default function CaseStudiesDashboard() {
 
     setDeletingId(id);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

@@ -5,7 +5,7 @@ import BookAppointmentBtn from "@/src/components/common/BookAppointmentBtn";
 
 async function getProfile() {
     try {
-        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
             cache: 'no-store'
         });
         if (!res.ok) return null;
@@ -19,7 +19,7 @@ async function getProfile() {
 
 async function getTeamMembers() {
     try {
-        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/team-members`, {
             cache: 'no-store'
         });
         if (!res.ok) return [];
@@ -33,7 +33,7 @@ async function getTeamMembers() {
 
 async function getSettings() {
     try {
-        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/settings`, {
             cache: 'no-store'
         });
         if (!res.ok) return null;

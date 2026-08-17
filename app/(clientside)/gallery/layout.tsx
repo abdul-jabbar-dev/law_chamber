@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Gallery | Law Chamber",
+    title: "Gallery | Legal Advocare Bureau-LAB",
     description: "Explore our firm's gallery, events, and professional workspace.",
 };
 

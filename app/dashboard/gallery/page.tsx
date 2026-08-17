@@ -6,7 +6,7 @@ import GalleryList from "./components/GalleryList"
 
 async function getGalleryItems() {
   try {
-    const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, { cache: 'no-store' });
     if (!res.ok) return null;
     const data = await res.json();
     return data.data;

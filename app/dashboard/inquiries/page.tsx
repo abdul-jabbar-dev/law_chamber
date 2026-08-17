@@ -25,7 +25,7 @@ export default function InquiriesDashboard() {
 
   const fetchInquiries = async () => {
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries`);
       const data = await res.json();
       if (data.success) {
         setInquiries(data.data);
@@ -44,7 +44,7 @@ export default function InquiriesDashboard() {
   const handleUpdateStatus = async (id: string, newStatus: "Pending" | "Reviewed") => {
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -64,7 +64,7 @@ export default function InquiriesDashboard() {
     if (!window.confirm("Are you sure you want to delete this inquiry?")) return;
     setProcessingId(id);
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/inquiries/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -110,8 +110,8 @@ export default function InquiriesDashboard() {
               key={f}
               onClick={() => setFilter(f as any)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === f
-                  ? "bg-slate-800 text-white"
-                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+                ? "bg-slate-800 text-white"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
                 }`}
             >
               {f}

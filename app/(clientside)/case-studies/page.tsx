@@ -8,7 +8,7 @@ export const metadata = {
 
 async function getCaseStudies() {
     try {
-        const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/case-studies`, {
             cache: 'no-store'
         });
         if (!res.ok) {

@@ -32,7 +32,7 @@ export default function ProfileManagement() {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`);
       const data = await res.json();
       if (data.success && data.data) {
         const p = data.data;
@@ -148,7 +148,7 @@ export default function ProfileManagement() {
         submitData.append("image", imageFile);
       }
 
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/profile`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`

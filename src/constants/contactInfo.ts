@@ -59,6 +59,6 @@ export function getEmailMailtoLink(details?: {
     const lName = lawyerName || 'Advocate';
     const subject = encodeURIComponent(`Legal Appointment Request - ${fullName}`);
     const body = encodeURIComponent(`Hello ${lName},\n\nI would like to request an appointment.\n\nName: ${fullName}\nPhone: ${phone}\nDate: ${preferredDate} (${preferredTime})\nPractice Area: ${practiceArea}\nNotes: ${notes}`);
-    const emailAddress = targetEmail || 'info@lawfirm.com';
+    const emailAddress = targetEmail || 'advocarebureau@gmail.com';
     return `mailto:${emailAddress}?subject=${subject}&body=${body}`;
 }

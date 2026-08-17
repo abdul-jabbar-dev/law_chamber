@@ -38,7 +38,7 @@ const ReviewForm = () => {
                 formData.append("image", image);
             }
 
-            const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/testimonials`, {
                 method: "POST",
                 body: formData,
             });

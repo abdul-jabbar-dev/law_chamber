@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 async function getSettings() {
     try {
-        const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
         const res = await fetch(`${baseUrl}/settings`, { next: { revalidate: 60 } });
         const data = await res.json();
 
@@ -32,6 +32,7 @@ const Footer = async () => {
                         <Link href="/" className="flex w-32 items-center gap-3">
                             <Image src={'/svg/logoSvg.svg'} alt="Logo" width={80} height={80} style={{ width: 'auto', height: 'auto' }} />
                         </Link>
+                        <h4 className="text-xl font-bold text-white tracking-wide font-serif">Legal Advocare Bureau-LAB</h4>
                         <p className="text-sm text-gray-400 leading-relaxed">
                             Providing expert legal solutions with integrity, dedication, and a commitment to justice.
                         </p>
@@ -62,7 +63,7 @@ const Footer = async () => {
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="text-white font-bold mb-4">Legal Advocare Bureau</h4>
+                        <h4 className="text-white font-bold mb-4">Social Links</h4>
                         <ul className="space-y-4">
                             {officeInfo.phoneNumber ? <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-[#A07D5A]" />
@@ -82,12 +83,12 @@ const Footer = async () => {
                 </div>
 
                 <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
-                    <p>&copy; {new Date().getFullYear()} Law Firm. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Legal Advocare Bureau-LAB. All rights reserved.</p>
 
                     {/* Watermark Developer Credit */}
                     <div className="flex items-center gap-1 text-xs text-gray-500 font-sans select-none">
                         <span className="opacity-70">Developed by</span>
-                        <abbr
+                       <a href="https://www.linkedin.com/in/abdul-jabbar-16a928226" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-500 transition-colors font-semibold"> <abbr
                             title="Abdul Jabbar"
                             className="group relative no-underline cursor-pointer inline-flex items-center text-[#A07D5A] font-bold hover:text-amber-400 transition-colors duration-500 font-sans tracking-wide overflow-hidden"
                         >
@@ -106,7 +107,7 @@ const Footer = async () => {
                                     abbar
                                 </span>
                             </span>
-                        </abbr>
+                        </abbr></a>
                     </div>
                 </div>
             </div>

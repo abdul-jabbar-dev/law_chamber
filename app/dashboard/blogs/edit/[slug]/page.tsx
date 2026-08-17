@@ -6,7 +6,7 @@ import BlogForm from "../../components/BlogForm"
 
 async function getBlogBySlug(slug: string) {
   try {
-    const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/blogs/${slug}`, { cache: 'no-store' });
     if (!res.ok) return null;
     const data = await res.json();
     return data.data;

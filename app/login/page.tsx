@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden font-sans">
-      
+
       {/* Left Column: Branding / Aesthetics */}
       <div className="hidden lg:flex flex-col justify-between w-1/2 bg-slate-900 text-slate-50 p-12 relative overflow-hidden">
         {/* Abstract Background Elements */}
@@ -51,7 +51,7 @@ export default function LoginPage() {
             </span>
           </h2>
           <p className="text-slate-400 text-lg leading-relaxed">
-            Manage your legal portfolio, cases, and client inquiries from a centralized, secure dashboard. 
+            Manage your legal portfolio, cases, and client inquiries from a centralized, secure dashboard.
           </p>
         </div>
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
       {/* Right Column: Form */}
       <div className="flex flex-col justify-center items-center w-full lg:w-1/2 p-6 md:p-12 relative z-10 bg-white shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.05)]">
-        
+
         {/* Mobile Header (Hidden on Desktop) */}
         <div className="flex lg:hidden items-center gap-2 mb-12">
           <div className="p-2 bg-slate-900 rounded-lg">
@@ -80,7 +80,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-4">
-              
+
               {/* Email Input */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2" htmlFor="email">
@@ -124,8 +124,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isLoading}
               className="group relative w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-xl text-white font-semibold bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed mt-4 shadow-lg shadow-slate-900/20"
             >
@@ -135,7 +135,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-8 text-center text-sm text-slate-500">
-            &copy; {new Date().getFullYear()} Law Chamber Portfolio. All rights reserved.
+            &copy; {new Date().getFullYear()} Legal Advocare Bureau-LAB Portfolio. All rights reserved.
           </div>
         </div>
       </div>

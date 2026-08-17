@@ -3,7 +3,7 @@ import TestimonialSlider from './TestimonialSlider';
 
 async function getTestimonials() {
     try {
-        const baseUrl = process.env.PUBLIC_API_URL || 'http://localhost:5000/api';
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
         const res = await fetch(`${baseUrl}/testimonials`, { next: { revalidate: 60 } });
         const data = await res.json();
 

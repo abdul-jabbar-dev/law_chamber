@@ -44,7 +44,7 @@ export default function GalleryUploadPage() {
       if (description) formData.append("description", description)
       formData.append("image", imageFile)
 
-      const res = await fetch(`${process.env.PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/gallery`, {
         method: 'POST',
         body: formData,
       })
